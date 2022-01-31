@@ -8,5 +8,6 @@
             </p>
         </div>
     </div>
-    <button class="rounded p-1 dark:bg-white bg-gray-dark dark:text-black text-white absolute top-2 right-2" (click)="toggleTheme()">Toggle Theme</button>
+    <fa-icon [icon]="faSun" class="text-2xl invisible dark:visible dark:text-white absolute top-2 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
+    <fa-icon [icon]="faMoon" class="text-2xl dark:hidden absolute top-2 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
 </div>

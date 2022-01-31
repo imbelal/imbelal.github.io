@@ -17,6 +17,11 @@ module.exports = {
       'black':'#212428',
       'white':'#ffffff'
     },
+    variants: {
+      extend: {
+        display: ['dark']
+      },
+    },
     extend: {},
   },
   plugins: [],

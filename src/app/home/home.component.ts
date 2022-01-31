@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { faPalette } from '@fortawesome/free-solid-svg-icons';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faSun } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  faPalette = faPalette;
+  faMoon = faMoon;
+  faSun = faSun;
   constructor() { }
 
   ngOnInit(): void {
@@ -16,7 +21,7 @@ export class HomeComponent implements OnInit {
   toggleTheme(){
     // Whenever the user explicitly chooses theme color
     if(localStorage.getItem('theme') === 'dark')
-      localStorage.setItem('theme','light');
+      localStorage.setItem('theme',''); // replacing dark string with empty string
     else
       localStorage.setItem('theme','dark');
 
@@ -30,11 +35,6 @@ export class HomeComponent implements OnInit {
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }
-
-  changeThemeAsLikeOs(){
-    // Whenever the user explicitly chooses to respect the OS preference
-    localStorage.removeItem('theme')
   }
 
 }
