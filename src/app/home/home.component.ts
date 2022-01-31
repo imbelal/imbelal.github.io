@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeThemeColor();
-    const options = {
+    const options_for_second_paragraph = {
       strings: [
-        'Hi I am Belal',
-        'A passionate full-stack software developer who focuses on writing clean, elegant and efficient code.'],
+        'A passionate full-stack software developer who focuses on writing clean, elegant and efficient code.',
+        'Building automated software solutions since 2018 to run complex business smoothly using latest technologies like .NET, .NET Core, SQL, Angular, VueJS.'],
       typeSpeed: 30,
       backSpeed: 10,
       showCursor: true,
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       cursorChar: '_',
       loop: true
     };
-    const typed = new Typed('.typed-element', options);
+    const typed = new Typed('.second_typed-element', options_for_second_paragraph);
   }
 
   toggleTheme(){
