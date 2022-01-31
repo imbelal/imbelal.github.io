@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
+import Typed from 'typed.js';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeThemeColor();
+    const options = {
+      strings: [
+        'Hi I am Belal',
+        'A passionate full-stack software developer who focuses on writing clean, elegant and efficient code.'],
+      typeSpeed: 30,
+      backSpeed: 10,
+      showCursor: true,
+      smartBackspace: true,
+      cursorChar: '_',
+      loop: true
+    };
+    const typed = new Typed('.typed-element', options);
   }
 
   toggleTheme(){
