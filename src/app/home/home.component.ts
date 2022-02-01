@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faXingSquare } from '@fortawesome/free-brands-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Typed from 'typed.js';
 
 @Component({
@@ -13,6 +16,9 @@ export class HomeComponent implements OnInit {
   faPalette = faPalette;
   faMoon = faMoon;
   faSun = faSun;
+  faLinkedin = faLinkedin;
+  faXing = faXingSquare;
+  faGithub = faGithub;
   constructor() { }
 
   ngOnInit(): void {

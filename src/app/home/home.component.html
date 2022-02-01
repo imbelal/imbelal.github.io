@@ -1,5 +1,8 @@
 <div class="container">
-    <div class="flex h-screen">   
+    <div class="flex h-screen">
+        <div class="absolute left-0 right-0 top-16">
+            <img class="mx-auto h-40 w-40 rounded-full object-cover hover:scale-125 transition duration-700 ease-in-out drop-shadow-xl ring hover:ring-yellow " src="assets/Md_Belal_Hosen_PassportSizePhoto.jpg" alt="ChitChat Logo">
+        </div>
         <div class="w-full md:w-3/5 p-1 md:p-5 m-auto dark:text-white text-center">
             <span class="text-4xl font-bold">Hi, I'm Belal.</span> <br>
             <span class="text-3xl second_typed-element"></span>
@@ -7,4 +10,16 @@
     </div>
     <fa-icon [icon]="faSun" class="text-2xl invisible dark:visible dark:text-white absolute top-2 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
     <fa-icon [icon]="faMoon" class="text-2xl dark:hidden absolute top-2 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
+    <div class=" absolute right-2 top-20">
+        <a href="https://www.linkedin.com/in/md-belal-hosen/" target="_blank">
+            <fa-icon [icon]="faLinkedin" class="text-2xl text-blue cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
+        </a> <br>
+        <a href="https://www.xing.com/profile/MdBelal_Hosen/cv" target="_blank">
+            <fa-icon [icon]="faXing" class="text-2xl dark:text-white cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
+        </a> <br>
+        <a href="https://github.com/belal55" target="_blank">
+            <fa-icon [icon]="faGithub" class="text-2xl dark:text-white cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
+        </a>
+        <br>
+    </div>
 </div>
