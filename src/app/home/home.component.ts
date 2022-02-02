@@ -5,7 +5,10 @@ import { faSun } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faXingSquare } from '@fortawesome/free-brands-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
 import Typed from 'typed.js';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +22,8 @@ export class HomeComponent implements OnInit {
   faLinkedin = faLinkedin;
   faXing = faXingSquare;
   faGithub = faGithub;
+  faMail = faEnvelope;
+  email = environment.email;
   constructor() { }
 
   ngOnInit(): void {
