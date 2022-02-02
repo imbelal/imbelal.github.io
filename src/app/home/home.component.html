@@ -21,8 +21,12 @@
             <fa-icon [icon]="faGithub" class="text-2xl text-orange cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
         </a>
         <br>
-        <a href="mailto:{{email}}">
+        <a href="mailto:{{email}}" title="{{email}}">
             <fa-icon [icon]="faMail" class="text-2xl text-yellow cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
+        </a>
+        <br>
+        <a [attr.href]="mobileNo | byPassSecurity" title="{{mobile}}">
+            <fa-icon [icon]="faMobile" class="text-2xl text-purple cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
         </a>
     </div>
 </div>

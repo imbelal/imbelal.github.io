@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   email: "mdbelal.aiub@gmail.com",
+  mobile:"+4915734402228"
 };
 
 /*

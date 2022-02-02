@@ -6,9 +6,11 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faXingSquare } from '@fortawesome/free-brands-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneSquare } from '@fortawesome/free-solid-svg-icons';
 
 import Typed from 'typed.js';
 import { environment } from 'src/environments/environment';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +25,11 @@ export class HomeComponent implements OnInit {
   faXing = faXingSquare;
   faGithub = faGithub;
   faMail = faEnvelope;
+  faMobile = faPhoneSquare;
   email = environment.email;
+  mobile = environment.mobile;
+  mobileNo = `tel:${environment.mobile}`;
+
   constructor() { }
 
   ngOnInit(): void {
