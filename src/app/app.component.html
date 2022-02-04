@@ -1,15 +1,24 @@
 <!-- particles background -->
-<div  id="particles-js" class="absolute top-0 left-0"></div>
+<div  id="particles-js" class="absolute top-0 left-0 z-10"></div>
+
+<!-- menus -->
+
+<div class="container z-10 w-auto absolute top-5 right-10">
+    <a href="" routerLink="" class="z-50 p-5 dark:text-white hover:font-bold">Home</a>
+    <a href="" routerLink="about" class="z-50 p-5 dark:text-white hover:font-bold">About</a>
+    <a href="" class="z-50 p-5 dark:text-white hover:font-bold">Work</a>
+    <a href="" class="z-50 p-5 dark:text-white hover:font-bold">Resume</a>
+</div>
 
  <!-- center body -->
-<div class="container">
+<div class="container z-10 ">
     <router-outlet></router-outlet>
 </div>
 
 <!-- right panel -->
-<div> 
-    <fa-icon [icon]="faSun" class="text-2xl invisible dark:visible dark:text-white absolute top-2 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
-    <fa-icon [icon]="faMoon" class="text-2xl dark:hidden absolute top-2 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
+<div class="z-10 "> 
+    <fa-icon [icon]="faSun" class="text-2xl invisible dark:visible dark:text-white absolute top-4 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
+    <fa-icon [icon]="faMoon" class="text-2xl dark:hidden absolute top-4 right-2 cursor-pointer animate-pulse" (click)="toggleTheme()"></fa-icon>
     <div class=" absolute right-2 top-20">
         <a href="https://www.linkedin.com/in/md-belal-hosen/" target="_blank">
             <fa-icon [icon]="faLinkedin" class="text-2xl text-blue cursor-pointer animate-pulse transition duration-700 ease-in-out"></fa-icon>
