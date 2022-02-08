@@ -7,13 +7,15 @@ import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {ByPassSecurityPipe} from 'src/app/core/Sanitize.pipe';
 import { AboutComponent } from './about/about.component';
+import { WorkComponent } from './work/work.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ByPassSecurityPipe,
-    AboutComponent
+    AboutComponent,
+    WorkComponent
   ],
   imports: [
     BrowserModule,
