@@ -18,8 +18,8 @@ declare var particlesJS: any;
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnInit{
-  
+export class AppComponent implements OnInit {
+
   title = 'imbelal_portfulio';
   faMoon = faMoon;
   faSun = faSun;
@@ -32,27 +32,27 @@ export class AppComponent implements OnInit{
   mobile = environment.mobile;
   mobileNo = `tel:${environment.mobile}`;
 
-  
+
   public ngOnInit(): void {
     this.invokeParticles();
     this.changeThemeColor();
   }
 
   public invokeParticles(): void {
-    particlesJS('particles-js', ParticlesConfig, function() {});
+    particlesJS('particles-js', ParticlesConfig, function () { });
   }
 
-  toggleTheme(){
+  toggleTheme() {
     // Whenever the user explicitly chooses theme color
-    if(localStorage.getItem('theme') === 'dark')
-      localStorage.setItem('theme',''); // replacing dark string with empty string
+    if (localStorage.getItem('theme') === 'dark')
+      localStorage.setItem('theme', ''); // replacing dark string with empty string
     else
-      localStorage.setItem('theme','dark');
+      localStorage.setItem('theme', 'dark');
 
     this.changeThemeColor();
   }
 
-  changeThemeColor(){
+  changeThemeColor() {
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
@@ -60,5 +60,5 @@ export class AppComponent implements OnInit{
       document.documentElement.classList.remove('dark');
     }
   }
-  
+
 }
