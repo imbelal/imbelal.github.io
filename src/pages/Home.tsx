@@ -1,31 +1,54 @@
 import React, { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import Typed from 'typed.js'
+import HomeCLI from '../components/HomeCLI'
 
-export default function Home() {
+interface HomeProps {
+  dark: boolean
+  onThemeChange: (isDark: boolean) => void
+}
+
+export default function Home({ dark, onThemeChange }: HomeProps) {
   const typedRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     if (!typedRef.current) return
     const typed = new Typed(typedRef.current, {
       strings: [
-        'A passionate full-stack software developer who focuses on writing clean, elegant and efficient code.',
-        'Building automated software solutions since 2018 using .NET, .NET Core, SQL, Angular, and VueJS.',
+        'I solve complex business challenges by architecting scalable, enterprise-grade systems that drive measurable impact.',
+        'I transform legacy systems into modern solutions, optimizing performance and enabling business growth since 2018.',
       ],
       typeSpeed: 30,
       backSpeed: 10,
-      showCursor: true,
+      showCursor: false,
       smartBackspace: true,
-      cursorChar: '_',
       loop: true,
+      startDelay: 100,
     })
+    
+    // Add custom cursor styling
+    if (typedRef.current) {
+      typedRef.current.style.position = 'relative'
+      typedRef.current.classList.add('custom-typed-cursor')
+    }
+    
     return () => typed.destroy()
   }, [])
+
+  const handleNavigate = (section: string) => {
+    const main = document.querySelector('main[style*="scroll"]') as HTMLElement
+    if (!main) return
+
+    const target = main.querySelector(`[data-section="${section}"]`) as HTMLElement
+    if (!target) return
+
+    const offset = target.offsetTop
+    main.scrollTo({ top: offset, behavior: 'smooth' })
+  }
 
   return (
     <div className="min-h-[calc(100vh-6rem)] flex flex-col items-center justify-center text-center max-w-4xl mx-auto animate-fade-in">
       {/* Profile photo */}
-      <div className="relative mb-8">
+      <div className="relative mb-7" style={{ marginBottom: '24px' }}>
         <div className="absolute inset-0 rounded-full animate-glow" />
         <img
           src="/assets/ProfilePic.jpg"
@@ -37,40 +60,29 @@ export default function Home() {
       </div>
 
       {/* Greeting */}
-      <p className="text-slate-400 text-sm font-medium tracking-widest uppercase mb-3">
+      <p className="text-slate-400 text-sm font-medium tracking-widest uppercase" style={{ marginBottom: '7px' }}>
         👋 Hello, World!
       </p>
 
       {/* Name */}
-      <h1 className="text-5xl md:text-7xl font-black mb-4 leading-tight">
+      <h1 className="text-5xl md:text-7xl font-black leading-tight" style={{ marginBottom: '11px' }}>
         I'm{' '}
         <span className="gradient-text">Belal</span>
       </h1>
 
       {/* Typed subtitle */}
-      <div className="text-slate-300 text-lg md:text-xl max-w-2xl min-h-[80px] flex items-start justify-center">
-        <span ref={typedRef} />
+      <div className="text-slate-300 text-lg md:text-xl max-w-2xl min-h-[80px] text-center" style={{ marginBottom: '-5px' }}>
+        <span ref={typedRef} className="block w-full" />
       </div>
 
-      {/* CTA buttons */}
-      <div className="flex flex-wrap gap-4 mt-10 justify-center">
-        <Link
-          to="/work"
-          className="px-8 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 transition-all duration-200 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transform"
-        >
-          View My Work
-        </Link>
-        <Link
-          to="/about"
-          className="px-8 py-3 rounded-xl font-semibold text-slate-300 border border-slate-700 hover:border-indigo-500/60 hover:text-white glass transition-all duration-200 hover:-translate-y-0.5 transform"
-        >
-          About Me
-        </Link>
+      {/* Home CLI - Inline positioning */}
+      <div className="w-full flex justify-center" style={{ marginTop: '-5px' }}>
+        <HomeCLI onNavigate={handleNavigate} dark={dark} onThemeChange={onThemeChange} />
       </div>
 
       {/* Scroll hint */}
-      <div className="mt-16 flex flex-col items-center gap-2 text-slate-600">
-        <span className="text-xs tracking-widest uppercase">scroll</span>
+      <div className="mt-12 flex flex-col items-center gap-2 text-slate-600">
+        <span className="text-xs tracking-widest uppercase">or scroll down</span>
         <div className="w-px h-10 bg-gradient-to-b from-slate-600 to-transparent animate-pulse" />
       </div>
     </div>

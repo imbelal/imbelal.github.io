@@ -1,5 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
-import { Routes, Route, NavLink } from 'react-router-dom'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import Particles from 'react-tsparticles'
 import { loadSlim } from 'tsparticles-slim'
 import type { Engine } from 'tsparticles-engine'
@@ -9,6 +8,7 @@ import { faLinkedin, faXingSquare, faGithub } from '@fortawesome/free-brands-svg
 import Home from './pages/Home'
 import About from './pages/About'
 import Work from './pages/Work'
+import GlobalCLI from './components/GlobalCLI'
 import { particlesConfig } from './particlesConfig'
 
 const EMAIL = 'mdbelal.aiub@gmail.com'
@@ -17,6 +17,12 @@ const MOBILE = '+4915734402228'
 export default function App() {
   const [dark, setDark] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
+  const [scrollTop, setScrollTop] = useState(0)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const homeRef = useRef<HTMLDivElement>(null)
+  const aboutRef = useRef<HTMLDivElement>(null)
+  const workRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const stored = localStorage.getItem('theme')
@@ -24,6 +30,32 @@ export default function App() {
     const isDark = stored === 'dark' || (!stored && prefersDark)
     setDark(isDark)
     document.documentElement.classList.toggle('dark', isDark)
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollContainerRef.current) return
+      
+      const container = scrollContainerRef.current
+      const containerHeight = container.clientHeight
+      const currentScrollTop = container.scrollTop
+      setScrollTop(currentScrollTop)
+      
+      // Determine which section is in view
+      if (currentScrollTop < containerHeight / 2) {
+        setActiveSection('home')
+      } else if (currentScrollTop < containerHeight * 1.5) {
+        setActiveSection('about')
+      } else {
+        setActiveSection('work')
+      }
+    }
+    
+    const container = scrollContainerRef.current
+    if (container) {
+      container.addEventListener('scroll', handleScroll)
+      return () => container.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   const toggleTheme = () => {
@@ -37,86 +69,77 @@ export default function App() {
     await loadSlim(engine)
   }, [])
 
-  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-      isActive
+  const getParticlesConfig = () => {
+    const baseConfig = { ...particlesConfig }
+    if (!dark) {
+      return {
+        ...baseConfig,
+        particles: {
+          ...baseConfig.particles,
+          color: { value: ['#4f46e5', '#0891b2', '#6366f1'] },
+          links: baseConfig.particles?.links ? {
+            ...baseConfig.particles.links,
+            color: '#4f46e5',
+          } : { color: '#4f46e5' },
+        },
+      }
+    }
+    return baseConfig
+  }
+
+  const navLinkClass = (sectionName: string) =>
+    `px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer ${
+      activeSection === sectionName
         ? 'text-white bg-indigo-500/20 border border-indigo-500/40'
         : 'text-slate-400 hover:text-white hover:bg-white/5'
     }`
+  
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current && scrollContainerRef.current) {
+      const container = scrollContainerRef.current
+      const offset = ref.current.offsetTop
+      container.scrollTo({ top: offset, behavior: 'smooth' })
+    }
+  }
+
+  const handleCLINavigate = (section: string) => {
+    const sectionMap: { [key: string]: React.RefObject<HTMLDivElement> } = {
+      about: aboutRef,
+      work: workRef,
+      home: homeRef,
+    }
+    const ref = sectionMap[section]
+    if (ref) scrollToSection(ref)
+  }
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* Particles background */}
       <Particles
+        key={dark ? 'dark' : 'light'}
         id="tsparticles"
         init={particlesInit}
-        options={particlesConfig}
+        options={getParticlesConfig()}
         className="fixed inset-0 -z-10"
       />
 
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between glass rounded-2xl px-6 py-3">
-          {/* Logo */}
-          <NavLink to="/" className="text-white font-bold text-lg tracking-tight">
-            <span className="gradient-text">BH</span>
-            <span className="text-slate-300 ml-1 text-sm font-normal">/ dev</span>
-          </NavLink>
-
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-1">
-            <NavLink to="/" end className={navLinkClass}>Home</NavLink>
-            <NavLink to="/about" className={navLinkClass}>About</NavLink>
-            <NavLink to="/work" className={navLinkClass}>Work</NavLink>
-            <a
-              href="/assets/Md Belal Hosen_CV.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="ml-2 px-4 py-2 text-sm font-semibold rounded-lg border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white transition-all duration-200"
-            >
-              Resume ↗
-            </a>
-          </div>
-
-          {/* Theme toggle + mobile menu button */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-200"
-              aria-label="Toggle theme"
-            >
-              <FontAwesomeIcon icon={dark ? faSun : faMoon} />
-            </button>
-            <button
-              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Menu"
-            >
-              <div className="w-5 h-0.5 bg-current mb-1" />
-              <div className="w-5 h-0.5 bg-current mb-1" />
-              <div className="w-5 h-0.5 bg-current" />
-            </button>
-          </div>
+      {/* Minimal top bar - Theme toggle only */}
+      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-end">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-200"
+            aria-label="Toggle theme"
+          >
+            <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+          </button>
         </div>
+      </div>
 
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div className="md:hidden mt-2 glass rounded-2xl px-6 py-4 flex flex-col gap-2">
-            <NavLink to="/" end className={navLinkClass} onClick={() => setMenuOpen(false)}>Home</NavLink>
-            <NavLink to="/about" className={navLinkClass} onClick={() => setMenuOpen(false)}>About</NavLink>
-            <NavLink to="/work" className={navLinkClass} onClick={() => setMenuOpen(false)}>Work</NavLink>
-            <a
-              href="/assets/Md Belal Hosen_CV.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="px-4 py-2 text-sm font-semibold rounded-lg border border-indigo-500 text-indigo-400 text-center"
-              onClick={() => setMenuOpen(false)}
-            >
-              Resume ↗
-            </a>
-          </div>
-        )}
-      </nav>
+      {/* Global CLI - Only on non-home pages */}
+      {activeSection !== 'home' && (
+        <GlobalCLI dark={dark} onThemeChange={setDark} onNavigate={handleCLINavigate} isAtHome={false} />
+      )}
 
       {/* Left social panel (desktop) */}
       <div className="fixed left-5 bottom-0 z-40 hidden lg:flex flex-col items-center gap-4 pb-0">
@@ -155,13 +178,41 @@ export default function App() {
         <div className="w-px h-20 bg-gradient-to-b from-indigo-500/50 to-transparent" />
       </div>
 
-      {/* Page content */}
-      <main className="relative z-10 pt-24 pb-20 px-4 lg:px-16 xl:px-24">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/work" element={<Work />} />
-        </Routes>
+      {/* Page content - Scrollable container */}
+      <main 
+        ref={scrollContainerRef}
+        className="relative z-10 h-screen overflow-y-scroll scroll-smooth"
+        style={{ scrollSnapType: 'y mandatory' }}
+      >
+        {/* Home Section */}
+        <div 
+          ref={homeRef}
+          data-section="home"
+          className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
+          style={{ scrollSnapAlign: 'start' }}
+        >
+          <Home dark={dark} onThemeChange={setDark} />
+        </div>
+
+        {/* About Section */}
+        <div 
+          ref={aboutRef}
+          data-section="about"
+          className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
+          style={{ scrollSnapAlign: 'start' }}
+        >
+          <About />
+        </div>
+
+        {/* Work Section */}
+        <div 
+          ref={workRef}
+          data-section="work"
+          className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
+          style={{ scrollSnapAlign: 'start' }}
+        >
+          <Work />
+        </div>
       </main>
     </div>
   )
