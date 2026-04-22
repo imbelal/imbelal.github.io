@@ -10,20 +10,27 @@ interface HomeCLIProps {
   onNavigate: (section: string) => void
   dark: boolean
   onThemeChange: (isDark: boolean) => void
+  history: string[]
+  setHistory: (history: string[]) => void
+  output: CommandOutput[]
+  setOutput: (output: CommandOutput[]) => void
+  historyIndex: number
+  setHistoryIndex: (index: number) => void
 }
 
-export default function HomeCLI({ onNavigate, dark, onThemeChange }: HomeCLIProps) {
+export default function HomeCLI({ 
+  onNavigate, 
+  dark, 
+  onThemeChange,
+  history,
+  setHistory,
+  output,
+  setOutput,
+  historyIndex,
+  setHistoryIndex,
+}: HomeCLIProps) {
   const [isExpanded, setIsExpanded] = useState(true)
   const [input, setInput] = useState('')
-  const [history, setHistory] = useState<string[]>([])
-  const [historyIndex, setHistoryIndex] = useState(-1)
-  const [output, setOutput] = useState<CommandOutput[]>([
-    {
-      command: '',
-      response: ['$ Welcome to my portfolio CLI', '$ Type "help" to see available commands'],
-      timestamp: Date.now(),
-    },
-  ])
   const inputRef = useRef<HTMLInputElement>(null)
   const outputRef = useRef<HTMLDivElement>(null)
 
