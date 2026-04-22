@@ -204,32 +204,32 @@ export default function HomeCLI({
 
   if (!isExpanded) {
     return (
-      <button
+      <div
         onClick={() => setIsExpanded(true)}
-        className="w-full max-w-md glass rounded-2xl p-4 border border-indigo-500/20 hover:border-indigo-500/50 transition-all duration-300 flex items-center justify-between group"
+        className="w-full max-w-sm md:max-w-md glass rounded-2xl p-3 md:p-4 border border-indigo-500/20 hover:border-indigo-500/50 transition-all duration-300 flex items-center justify-between group cursor-pointer"
       >
-        <div className="flex items-center gap-3">
-          <span className="text-xl">⚡</span>
-          <div className="text-left">
-            <div className="text-slate-300 text-sm font-mono">belal@portfolio:~$ </div>
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <span className="text-lg md:text-xl flex-shrink-0">⚡</span>
+          <div className="text-left min-w-0">
+            <div className="text-slate-300 text-xs md:text-sm font-mono truncate">belal@portfolio:~$ </div>
             <div className="text-slate-500 text-xs">Click to open CLI</div>
           </div>
         </div>
-        <span className="text-indigo-400 group-hover:scale-110 transition-transform">▼</span>
-      </button>
+        <span className="text-indigo-400 group-hover:scale-110 transition-transform flex-shrink-0">▼</span>
+      </div>
     )
   }
 
   return (
-    <div className="w-full max-w-md glass rounded-2xl p-6 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors duration-300 font-mono">
+    <div className="w-full max-w-sm md:max-w-md glass rounded-2xl p-4 md:p-6 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors duration-300 font-mono">
       {/* Terminal Header */}
       <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-700/50">
-        <div className="flex items-center gap-2">
-          <span className="text-indigo-400 font-bold">⚡ belal@portfolio:~$</span>
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-indigo-400 font-bold text-xs md:text-sm truncate">⚡ belal@portfolio:~$</span>
         </div>
         <button
           onClick={() => setIsExpanded(false)}
-          className="text-slate-500 hover:text-slate-300 transition-colors text-lg"
+          className="text-slate-500 hover:text-slate-300 transition-colors text-lg flex-shrink-0 ml-2"
         >
           ✕
         </button>
@@ -238,7 +238,7 @@ export default function HomeCLI({
       {/* Terminal Output */}
       <div
         ref={outputRef}
-        className="h-48 overflow-y-auto mb-4 space-y-2 text-sm bg-slate-900/30 rounded-lg p-4 border border-slate-700/50"
+        className="h-40 md:h-48 overflow-y-auto mb-4 space-y-2 text-xs md:text-sm bg-slate-900/30 rounded-lg p-3 md:p-4 border border-slate-700/50"
       >
         {output.map((item, idx) => (
           <div key={idx} className="space-y-1">
@@ -261,8 +261,8 @@ export default function HomeCLI({
       </div>
 
       {/* Terminal Input */}
-      <div className="flex items-center gap-2 bg-slate-900/50 rounded-lg px-4 py-2 border border-slate-700/50">
-        <span className="text-slate-500">$</span>
+      <div className="flex items-center gap-2 bg-slate-900/50 rounded-lg px-3 md:px-4 py-2 border border-slate-700/50">
+        <span className="text-slate-500 flex-shrink-0">$</span>
         <input
           ref={inputRef}
           type="text"
@@ -270,12 +270,12 @@ export default function HomeCLI({
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type a command..."
-          className="flex-1 bg-transparent outline-none text-slate-300 placeholder-slate-600 caret-indigo-400"
+          className="flex-1 bg-transparent outline-none text-xs md:text-sm text-slate-300 placeholder-slate-600 caret-indigo-400 min-w-0"
         />
-        <span className="text-indigo-400 animate-pulse">█</span>
+        <span className="text-indigo-400 animate-pulse flex-shrink-0">█</span>
       </div>
 
-      <div className="mt-3 text-xs text-slate-500 flex gap-4">
+      <div className="mt-3 text-[10px] md:text-xs text-slate-500 flex gap-2 md:gap-4 flex-wrap">
         <span>↑↓ History</span>
         <span>Ctrl+L Clear</span>
         <span>Esc Close</span>
