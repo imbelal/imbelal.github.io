@@ -142,7 +142,7 @@ export default function App() {
       />
 
       {/* Minimal top bar - Theme toggle only */}
-      <div className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+      <div className="fixed top-0 left-0 right-0 z-40 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-end">
           <button
             onClick={toggleTheme}
@@ -217,7 +217,7 @@ export default function App() {
         <div 
           ref={homeRef}
           data-section="home"
-          className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
+          className="min-h-screen w-full pt-20 pb-20 md:pt-24 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 flex items-center justify-center"
           style={{ scrollSnapAlign: 'start' }}
         >
           <Home 
@@ -236,7 +236,7 @@ export default function App() {
         <div 
           ref={aboutRef}
           data-section="about"
-          className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
+          className="min-h-screen w-full pt-20 pb-20 md:pt-24 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 flex items-center justify-center"
           style={{ scrollSnapAlign: 'start' }}
         >
           <About />
@@ -246,7 +246,7 @@ export default function App() {
         <div 
           ref={workRef}
           data-section="work"
-          className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
+          className="min-h-screen w-full pt-20 pb-20 md:pt-24 md:pb-20 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 flex items-center justify-center"
           style={{ scrollSnapAlign: 'start' }}
         >
           <Work />
