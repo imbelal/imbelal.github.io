@@ -11,20 +11,28 @@ interface GlobalCLIProps {
   onThemeChange: (isDark: boolean) => void
   onNavigate: (section: string) => void
   isAtHome: boolean
+  history: string[]
+  setHistory: (history: string[]) => void
+  output: CommandOutput[]
+  setOutput: (output: CommandOutput[]) => void
+  historyIndex: number
+  setHistoryIndex: (index: number) => void
 }
 
-export default function GlobalCLI({ dark, onThemeChange, onNavigate, isAtHome }: GlobalCLIProps) {
+export default function GlobalCLI({ 
+  dark, 
+  onThemeChange, 
+  onNavigate, 
+  isAtHome,
+  history,
+  setHistory,
+  output,
+  setOutput,
+  historyIndex,
+  setHistoryIndex,
+}: GlobalCLIProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [input, setInput] = useState('')
-  const [history, setHistory] = useState<string[]>([])
-  const [historyIndex, setHistoryIndex] = useState(-1)
-  const [output, setOutput] = useState<CommandOutput[]>([
-    {
-      command: '',
-      response: ['$ Welcome to my portfolio CLI', '$ Type "help" to see available commands'],
-      timestamp: Date.now(),
-    },
-  ])
   const inputRef = useRef<HTMLInputElement>(null)
   const outputRef = useRef<HTMLDivElement>(null)
 

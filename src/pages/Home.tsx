@@ -2,12 +2,33 @@ import React, { useEffect, useRef } from 'react'
 import Typed from 'typed.js'
 import HomeCLI from '../components/HomeCLI'
 
+interface CommandOutput {
+  command: string
+  response: string | string[]
+  timestamp: number
+}
+
 interface HomeProps {
   dark: boolean
   onThemeChange: (isDark: boolean) => void
+  cliHistory: string[]
+  setCliHistory: (history: string[]) => void
+  cliOutput: CommandOutput[]
+  setCliOutput: (output: CommandOutput[]) => void
+  cliHistoryIndex: number
+  setCliHistoryIndex: (index: number) => void
 }
 
-export default function Home({ dark, onThemeChange }: HomeProps) {
+export default function Home({ 
+  dark, 
+  onThemeChange,
+  cliHistory,
+  setCliHistory,
+  cliOutput,
+  setCliOutput,
+  cliHistoryIndex,
+  setCliHistoryIndex,
+}: HomeProps) {
   const typedRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
@@ -77,7 +98,17 @@ export default function Home({ dark, onThemeChange }: HomeProps) {
 
       {/* Home CLI - Inline positioning */}
       <div className="w-full flex justify-center" style={{ marginTop: '-5px' }}>
-        <HomeCLI onNavigate={handleNavigate} dark={dark} onThemeChange={onThemeChange} />
+        <HomeCLI 
+          onNavigate={handleNavigate} 
+          dark={dark} 
+          onThemeChange={onThemeChange}
+          history={cliHistory}
+          setHistory={setCliHistory}
+          output={cliOutput}
+          setOutput={setCliOutput}
+          historyIndex={cliHistoryIndex}
+          setHistoryIndex={setCliHistoryIndex}
+        />
       </div>
 
       {/* Scroll hint */}

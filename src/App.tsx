@@ -14,11 +14,29 @@ import { particlesConfig } from './particlesConfig'
 const EMAIL = 'mdbelal.aiub@gmail.com'
 const MOBILE = '+4915734402228'
 
+interface CommandOutput {
+  command: string
+  response: string | string[]
+  timestamp: number
+}
+
 export default function App() {
   const [dark, setDark] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [scrollTop, setScrollTop] = useState(0)
+  
+  // Shared CLI state
+  const [cliHistory, setCliHistory] = useState<string[]>([])
+  const [cliOutput, setCliOutput] = useState<CommandOutput[]>([
+    {
+      command: '',
+      response: ['$ Welcome to my portfolio CLI', '$ Type "help" to see available commands'],
+      timestamp: Date.now(),
+    },
+  ])
+  const [cliHistoryIndex, setCliHistoryIndex] = useState(-1)
+  
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const homeRef = useRef<HTMLDivElement>(null)
   const aboutRef = useRef<HTMLDivElement>(null)
@@ -138,7 +156,18 @@ export default function App() {
 
       {/* Global CLI - Only on non-home pages */}
       {activeSection !== 'home' && (
-        <GlobalCLI dark={dark} onThemeChange={setDark} onNavigate={handleCLINavigate} isAtHome={false} />
+        <GlobalCLI 
+          dark={dark} 
+          onThemeChange={setDark} 
+          onNavigate={handleCLINavigate} 
+          isAtHome={false}
+          history={cliHistory}
+          setHistory={setCliHistory}
+          output={cliOutput}
+          setOutput={setCliOutput}
+          historyIndex={cliHistoryIndex}
+          setHistoryIndex={setCliHistoryIndex}
+        />
       )}
 
       {/* Left social panel (desktop) */}
@@ -191,7 +220,16 @@ export default function App() {
           className="min-h-screen w-full pt-24 pb-20 px-4 lg:px-16 xl:px-24 flex items-center justify-center"
           style={{ scrollSnapAlign: 'start' }}
         >
-          <Home dark={dark} onThemeChange={setDark} />
+          <Home 
+            dark={dark} 
+            onThemeChange={setDark}
+            cliHistory={cliHistory}
+            setCliHistory={setCliHistory}
+            cliOutput={cliOutput}
+            setCliOutput={setCliOutput}
+            cliHistoryIndex={cliHistoryIndex}
+            setCliHistoryIndex={setCliHistoryIndex}
+          />
         </div>
 
         {/* About Section */}
